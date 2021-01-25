@@ -706,7 +706,7 @@ definitions:
     xml:
       name: "User"
   Login:
-    type: string:
+    type: string
     properties:
       access_token: 
         type: string
