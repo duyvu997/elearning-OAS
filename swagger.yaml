@@ -1,53 +1,41 @@
 ---
-swagger: "2.0"
+openapi: "3.0.0"
 info:
-  description: "This is a APIs of Orange-Juice e-learning server."
-  version: "1.0.0"
   title: "Swagger Orange Juice"
-host: "orange-juice.swagger.io"
-basePath: "/v1"
+  version: "1.0.0"
+  description: "This is a APIs of Orange-Juice e-learning server."
+servers:
+  - url: https://orange-juice.edu.com/v1/
+    description: Optional server development description
 tags:
   - name: "USER"
   - name: "COURSE"
   - name: "QUIZ"
-schemes:
-  - "https"
-  - "http"
 paths:
-  /user:
+  /users:
     get:
       tags:
         - "USER"
       summary: "Get user's information"
-      description: ""
-      operationId: "getUserByName"
-      produces:
-        - "application/json"
-        - "application/xml"
       responses:
         200:
           description: "successful operation"
-          schema:
-            $ref: "#/definitions/User"
+          content:
+            application/json:
+              schema:
+                $ref: "#/definitions/User"
         400:
-          description: "Invalid username supplied"
+          description: "Bad request"
         404:
-          description: "User not found"
+          description: "Not found"
       security:
-        - orange-juice_auth:
-            - "write:user"
-            - "read:user"
+        - basic-auth: []
     put:
       tags:
         - "USER"
       summary: "Update user"
       description: "This can only be done by the logged in user."
       operationId: "updateUser"
-      consumes:
-        - "application/json"
-      produces:
-        - "application/json"
-        - "application/xml"
       parameters:
         - name: "username"
           in: "path"
@@ -66,7 +54,7 @@ paths:
         404:
           description: "User not found"
       security:
-        - orange-juice_auth:
+        - basic-auth:
             - "write:user"
             - "read:user"
     delete:
@@ -75,9 +63,6 @@ paths:
       summary: "Delete user"
       description: "This can only be done by the logged in user."
       operationId: "deleteUser"
-      produces:
-        - "application/json"
-        - "application/xml"
       parameters:
         - name: "username"
           in: "path"
@@ -90,7 +75,7 @@ paths:
         404:
           description: "User not found"
       security:
-        - orange-juice_auth:
+        - basic-auth:
             - "write:user"
             - "read:user"
     post:
@@ -99,11 +84,6 @@ paths:
       summary: "Create user"
       description: "This can only be done by the logged in user."
       operationId: "createUser"
-      consumes:
-        - "application/json"
-      produces:
-        - "application/json"
-        - "application/xml"
       parameters:
         - in: "body"
           name: "body"
@@ -114,16 +94,13 @@ paths:
       responses:
         default:
           description: "successful operation"
-  /user/login:
+  /users/login:
     post:
       tags:
         - "USER"
       summary: "Logs user into the system"
       description: ""
       operationId: "loginUser"
-      produces:
-        - "application/json"
-        - "application/xml"
       parameters:
         - in: "body"
           name: "body"
@@ -134,89 +111,159 @@ paths:
       responses:
         200:
           description: "successful operation"
-          schema:
-            $ref: "#/definitions/LoginResponse"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
         400:
           description: "Invalid username/password supplied"
-  /user/logout:
+  /users/logout:
     post:
       tags:
         - "USER"
       summary: "Logs out current logged in user session"
       description: ""
       operationId: "logoutUser"
-      produces:
-        - "application/json"
-        - "application/xml"
       parameters: []
       responses:
         default:
           description: "successful operation"
       deprecated: true
-securityDefinitions:
-  api_key:
-    type: "apiKey"
-    name: "api_key"
-    in: "header"
-  orange-juice_auth:
-    type: "oauth2"
-    authorizationUrl: "https://orange-juice.swagger.io/oauth/authorize"
-    flow: "implicit"
-    scopes:
-      read:user: "read your user info"
-      write:user: "modify info in your account"
-definitions:
-  ApiResponse:
-    type: "object"
-    properties:
-      code:
-        type: "integer"
-        format: "int32"
-      type:
-        type: "string"
-      message:
-        type: "string"
-  User:
-    type: "object"
-    properties:
-      id:
-        type: "integer"
-        format: "int64"
-      username:
-        type: "string"
-      name:
-        type: "string"
-      email:
-        type: "string"
-      password:
-        type: "string"
-      phone:
-        type: "string"
-      avatarUrl:
-        type: "string"
-        description: "example: https://orange-juice.com/uploads/2017/06/gg-1.jpg"
-      gender:
-        type: "string"
-      userRole:
-        type: "integer"
-        format: "int32"
-        description: "Admin - Parent - Children"
-    xml:
-      name: "User"
-  LoginResponse:
-    type: object
-    properties:
-      access_token:
-        type: string
-        description: "example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwidXNlcm5hbWUiOiJqb2huMDkwOSIsImlhdCI6MTUxNjIzOTAyMn0.aj5KcumubmGe3Twtm7vLWbe7Ljt806Hj_OmqVsbjGVU'
-        Please decode for more information: using https://jwt.io/"
-  LoginRequest:
-    type: object
-    properties:
-      username:
-        type: string
-      password:
-        type: string
+  /courses:
+    get:
+      tags:
+      - "COURSE"
+      parameters:
+        - in: query
+          name: all
+          type: string
+          description: get all courses
+        - $ref: '#parameters/offset'
+        - $ref: '#parameters/limit'
+
+      responses:
+        200:
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CoursesDashboard"
+        400:
+          description: "Bad request"
+        404:
+          description: "Courses not found"
+components:
+  schemas:
+    ApiResponse:
+      type: "object"
+      properties:
+        code:
+          type: "integer"
+          format: "int32"
+        type:
+          type: "string"
+        message:
+          type: "string"
+    User:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        username:
+          type: "string"
+        name:
+          type: "string"
+        email:
+          type: "string"
+        password:
+          type: "string"
+        phone:
+          type: "string"
+        avatarUrl:
+          type: "string"
+          description: "example: https://orange-juice.com/uploads/2017/06/gg-1.jpg"
+        gender:
+          type: "string"
+        userRole:
+          type: "integer"
+          format: "int32"
+          description: "Admin - Parent - Children"
+      xml:
+        name: "User"
+    Course:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+        duration:
+          type: "string"
+        members:
+          type: "integer"
+          format: "int32"
+        authors:
+          type: "string"
+        courseImageUrl:
+          type: "string"
+    CoursesDashboard:
+      allOf:
+        - $ref: '#/definitions/Course'
+        - type: object
+          properties:
+            userCourseStatus:
+              type: "string"
+              enum: [NOT_REGISTER, PENDING]
+              description: >
+                Explanations: <br>
+                * `NOT_REGISTER` - user not register this course yet. <br>
+                * `PENDING` - user is waiting for approval to join this course.
+    LoginResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: "example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwidXNlcm5hbWUiOiJqb2huMDkwOSIsImlhdCI6MTUxNjIzOTAyMn0.aj5KcumubmGe3Twtm7vLWbe7Ljt806Hj_OmqVsbjGVU'
+          Please decode for more information: using https://jwt.io/"
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+
+  parameters:
+    offset:
+      in: query
+      name: offset
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+      description: The number of items to skip before starting to collect the result set.
+    limit:
+      in: query
+      name: limit
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 50
+        default: 5
+      description: The numbers of items to return.
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
+security:
+  - bearerAuth: []
 externalDocs:
   description: "More details"
   url: "http://swagger.io"
