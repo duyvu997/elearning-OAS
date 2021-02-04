@@ -1,46 +1,29 @@
 ---
 swagger: "2.0"
 info:
-  description: "This is a sample server Petstore server.  You can find out more about\
-    \ Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).\
-    \  For this sample, you can use the api key `special-key` to test the authorization\
-    \ filters."
-  version: "1.0.5"
-  title: "Swagger Petstore"
-  termsOfService: "http://swagger.io/terms/"
-  contact:
-    email: "apiteam@swagger.io"
-  license:
-    name: "Apache 2.0"
-    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "petstore.swagger.io"
-basePath: "/v2"
+  description: "This is a APIs of Orange-Juice e-learning server."
+  version: "1.0.0"
+  title: "Swagger Orange Juice"
+host: "orange-juice.swagger.io"
+basePath: "/v1"
 tags:
-- name: "user"
-  description: "Operations about user"
-  externalDocs:
-    description: "Find out more about our store"
-    url: "http://swagger.io"
+  - name: "USER"
+  - name: "COURSE"
+  - name: "QUIZ"
 schemes:
-- "https"
-- "http"
+  - "https"
+  - "http"
 paths:
   /user:
     get:
       tags:
-      - "user"
-      summary: "Get user by user name"
+        - "USER"
+      summary: "Get user's information"
       description: ""
       operationId: "getUserByName"
       produces:
-      - "application/json"
-      - "application/xml"
-      parameters:
-      - name: "username"
-        in: "path"
-        description: "The name that needs to be fetched. Use user1 for testing. "
-        required: true
-        type: "string"
+        - "application/json"
+        - "application/xml"
       responses:
         200:
           description: "successful operation"
@@ -51,132 +34,133 @@ paths:
         404:
           description: "User not found"
       security:
-      - petstore_auth:
-        - "write:user"
-        - "read:user"
+        - orange-juice_auth:
+            - "write:user"
+            - "read:user"
     put:
       tags:
-      - "user"
-      summary: "Updated user"
+        - "USER"
+      summary: "Update user"
       description: "This can only be done by the logged in user."
       operationId: "updateUser"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
-      - "application/xml"
+        - "application/json"
+        - "application/xml"
       parameters:
-      - name: "username"
-        in: "path"
-        description: "name that need to be updated"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "body"
-        description: "Updated user object"
-        required: true
-        schema:
-          $ref: "#/definitions/User"
+        - name: "username"
+          in: "path"
+          description: "name that need to be updated"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Updated user object"
+          required: true
+          schema:
+            $ref: "#/definitions/User"
       responses:
         400:
           description: "Invalid user supplied"
         404:
           description: "User not found"
       security:
-      - petstore_auth:
-        - "write:user"
-        - "read:user"
+        - orange-juice_auth:
+            - "write:user"
+            - "read:user"
     delete:
       tags:
-      - "user"
+        - "USER"
       summary: "Delete user"
       description: "This can only be done by the logged in user."
       operationId: "deleteUser"
       produces:
-      - "application/json"
-      - "application/xml"
+        - "application/json"
+        - "application/xml"
       parameters:
-      - name: "username"
-        in: "path"
-        description: "The name that needs to be deleted"
-        required: true
-        type: "string"
+        - name: "username"
+          in: "path"
+          description: "The name that needs to be deleted"
+          required: true
+          type: "string"
       responses:
         400:
           description: "Invalid username supplied"
         404:
           description: "User not found"
       security:
-      - petstore_auth:
-        - "write:user"
-        - "read:user"
+        - orange-juice_auth:
+            - "write:user"
+            - "read:user"
     post:
       tags:
-      - "user"
+        - "USER"
       summary: "Create user"
       description: "This can only be done by the logged in user."
       operationId: "createUser"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
-      - "application/xml"
+        - "application/json"
+        - "application/xml"
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Created user object"
-        required: true
-        schema:
-          $ref: "#/definitions/User"
+        - in: "body"
+          name: "body"
+          description: "Created user"
+          required: true
+          schema:
+            $ref: "#/definitions/User"
       responses:
         default:
           description: "successful operation"
   /user/login:
     post:
       tags:
-      - "user"
+        - "USER"
       summary: "Logs user into the system"
       description: ""
       operationId: "loginUser"
       produces:
-      - "application/json"
-      - "application/xml"
+        - "application/json"
+        - "application/xml"
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Login user input"
-        required: true
-        schema:
-          $ref: "#/definitions/LoginInput"
+        - in: "body"
+          name: "body"
+          description: "Login user input"
+          required: true
+          schema:
+            $ref: "#/definitions/LoginRequest"
       responses:
         200:
           description: "successful operation"
           schema:
-            $ref: "#/definitions/Login"
+            $ref: "#/definitions/LoginResponse"
         400:
           description: "Invalid username/password supplied"
   /user/logout:
     post:
       tags:
-      - "user"
+        - "USER"
       summary: "Logs out current logged in user session"
       description: ""
       operationId: "logoutUser"
       produces:
-      - "application/json"
-      - "application/xml"
+        - "application/json"
+        - "application/xml"
       parameters: []
       responses:
         default:
           description: "successful operation"
+      deprecated: true
 securityDefinitions:
   api_key:
     type: "apiKey"
     name: "api_key"
     in: "header"
-  petstore_auth:
+  orange-juice_auth:
     type: "oauth2"
-    authorizationUrl: "https://petstore.swagger.io/oauth/authorize"
+    authorizationUrl: "https://orange-juice.swagger.io/oauth/authorize"
     flow: "implicit"
     scopes:
       read:user: "read your user info"
@@ -210,26 +194,29 @@ definitions:
         type: "string"
       avatarUrl:
         type: "string"
+        description: "example: https://orange-juice.com/uploads/2017/06/gg-1.jpg"
       gender:
         type: "string"
       userRole:
         type: "integer"
         format: "int32"
-        description: "User Role Admin - Parent - Children"
+        description: "Admin - Parent - Children"
     xml:
       name: "User"
-  Login:
+  LoginResponse:
     type: object
     properties:
-      access_token: 
+      access_token:
         type: string
-  LoginInput:
+        description: "example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwidXNlcm5hbWUiOiJqb2huMDkwOSIsImlhdCI6MTUxNjIzOTAyMn0.aj5KcumubmGe3Twtm7vLWbe7Ljt806Hj_OmqVsbjGVU'
+        Please decode for more information: using https://jwt.io/"
+  LoginRequest:
     type: object
     properties:
-      username: 
+      username:
         type: string
-      password: 
+      password:
         type: string
 externalDocs:
-  description: "Find out more about Swagger"
+  description: "More details"
   url: "http://swagger.io"
