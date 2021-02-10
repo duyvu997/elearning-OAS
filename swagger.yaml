@@ -222,7 +222,7 @@ components:
       properties:
         access_token:
           type: string
-          description: "example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwidXNlcm5hbWUiOiJqb2huMDkwOSIsImlhdCI6MTUxNjIzOTAyMn0.aj5KcumubmGe3Twtm7vLWbe7Ljt806Hj_OmqVsbjGVU'
+          example: "example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwidXNlcm5hbWUiOiJqb2huMDkwOSIsImlhdCI6MTUxNjIzOTAyMn0.aj5KcumubmGe3Twtm7vLWbe7Ljt806Hj_OmqVsbjGVU'
           Please decode for more information: using https://jwt.io/"
     LoginRequest:
       type: object
