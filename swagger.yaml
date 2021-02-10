@@ -137,17 +137,68 @@ paths:
       parameters:
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
+        - in: query
+          name: by-user
+          schema: 
+            type: boolean
+          required: false
+          description: "Get user name in token then find all courses of user."
+        - in: query
+          name: popular
+          schema: 
+            type: boolean
+          required: false
+          description: "Get courses with tag popular."
+        - in: query
+          name: newest
+          schema: 
+            type: boolean
+          required: false
+          description: "Get courses with tag newest"
+          
       responses:
         200:
           description: "successful operation"
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CoursesDashboard"
+                $ref: "#/components/schemas/CoursesResponse"
         400:
           description: "Bad request"
         404:
           description: "Courses not found"
+  /courses/{courseId}:
+    get: 
+      tags:
+      - "Course"
+      responses:
+        200:
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CourseDetails"
+        400:
+          description: "Bad request"
+        404:
+          description: "Courses not found"
+  /courses/{courseId}/lessons/{lessonId}:
+    get:
+      tags: 
+        - "Course"
+      responses:
+          200:
+            description: "successful operation"
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/LessonDetails"
+          400:
+            description: "Bad request"
+          404:
+            description: "Courses not found"
+    
+
 components:
   schemas:
     ApiResponse:
@@ -201,7 +252,7 @@ components:
           type: "string"
         courseImageUrl:
           type: "string"
-    CoursesDashboard:
+    GeneralCourse:
       allOf:
         - $ref: '#/components/schemas/Course'
         - type: object
@@ -213,6 +264,117 @@ components:
                 Explanations: <br>
                 * `NOT_REGISTER` - user not register this course yet. <br>
                 * `PENDING` - user is waiting for approval to join this course.
+          example: 
+            name: Ngữ Văn 6
+            author: Ms Vy Thuy
+            userCourseStatus: NOT_REGISTER 
+            duration: 6h 30min # duration in min 
+            members: 49 # duration in min 
+            courseImageUrl: https://orange-juice.com/uploads/2017/06/gg-1.jpg
+    PersonalCourse:
+      allOf:
+        - $ref: '#/components/schemas/Course'
+        - type: object
+          properties:
+            userCourseProcess:
+              type: integer
+              maximum: 100
+              minimum: 0
+          example: 
+            name: Ngữ Văn 6
+            author: "Ms Vy Thuy"
+            userCourseProcess: 83
+            courseImageUrl: https://orange-juice.com/uploads/2017/06/gg-1.jpg
+    CoursesResponseItem:
+      type: object
+      properties: 
+        tagName:
+          type: string # enum:  by-user | popular | newest | all
+        result:
+          type: array
+          items:
+            oneOf: 
+              - $ref: '#/components/schemas/GeneralCourse'
+              - $ref: '#/components/schemas/PersonalCourse'
+    CoursesResponse:
+      type: array
+      items:
+        $ref: '#components/schemas/CoursesResponseItem'
+      example:
+        [
+          {
+            tagName: popular,
+            result: []
+          },
+          {
+            tagName: newest,
+            result: []
+          },
+          {
+            tagName: by-user,
+            result: []
+          }, 
+          {
+            tagName: all,
+            result: []
+          },
+        ] 
+    Lesson: 
+      type: object
+      properties:
+        id: 
+          type: string
+        name:
+          type: string
+        lessonImageUrl:
+          type: string
+        lessonDesc:
+          type: string
+        status: 
+          type: string
+          enum: [DONE, LEARNING, LOCKED]
+    LessonDetails:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        lessonDesc:
+          type: string 
+        resources:
+          type: array
+          items: 
+            $ref: '#/components/schemas/LessonResource'
+        quizes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Quiz'
+    Quiz:
+      type: object
+      properties:
+        name:
+          type: string
+    LessonResource:
+      type: object
+      properties:
+        name:
+          type: string
+    CourseDetails: 
+        type: object
+        properties: 
+          id:
+            type: number
+          name:
+            type: string
+          title:
+            type: string
+          description:
+            type: string
+          lessons:
+            type: array
+            items: 
+              $ref: '#/components/schemas/Lesson'
     LoginResponse:
       type: object
       properties:
