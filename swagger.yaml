@@ -37,17 +37,19 @@ paths:
       description: "This can only be done by the logged in user."
       operationId: "updateUser"
       parameters:
-        - name: "username"
-          in: "path"
+        - in: "path"
+          name: "username"
+          schema: 
+            type: "string"
           description: "name that need to be updated"
           required: true
-          type: "string"
-        - in: "body"
-          name: "body"
-          description: "Updated user object"
-          required: true
-          schema:
-            $ref: "#/definitions/User"
+      requestBody: 
+        content: 
+          application/json:
+            schema:
+              $ref: "#/definitions/User"
+        description: "Updated user object"
+        required: true
       responses:
         400:
           description: "Invalid user supplied"
@@ -64,11 +66,12 @@ paths:
       description: "This can only be done by the logged in user."
       operationId: "deleteUser"
       parameters:
-        - name: "username"
-          in: "path"
+        - in: "path"
+          name: "username"
+          schema: 
+            type: "string"
           description: "The name that needs to be deleted"
           required: true
-          type: "string"
       responses:
         400:
           description: "Invalid username supplied"
@@ -84,13 +87,14 @@ paths:
       summary: "Create user"
       description: "This can only be done by the logged in user."
       operationId: "createUser"
-      parameters:
-        - in: "body"
-          name: "body"
-          description: "Created user"
-          required: true
-          schema:
-            $ref: "#/definitions/User"
+      requestBody: 
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/User"
+
+        description: "Created user"
+        required: true
       responses:
         default:
           description: "successful operation"
@@ -101,13 +105,14 @@ paths:
       summary: "Logs user into the system"
       description: ""
       operationId: "loginUser"
-      parameters:
-        - in: "body"
-          name: "body"
-          description: "Login user input"
-          required: true
-          schema:
-            $ref: "#/definitions/LoginRequest"
+      requestBody: 
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/LoginRequest"
+
+        description: "Login user input"
+        required: true
       responses:
         200:
           description: "successful operation"
@@ -134,13 +139,8 @@ paths:
       tags:
       - "COURSE"
       parameters:
-        - in: query
-          name: all
-          type: string
-          description: get all courses
-        - $ref: '#parameters/offset'
         - $ref: '#parameters/limit'
-
+        - $ref: '#parameters/offset'
       responses:
         200:
           description: "successful operation"
