@@ -8,14 +8,14 @@ servers:
   - url: https://orange-juice.edu.com/v1/
     description: Optional server development description
 tags:
-  - name: "USER"
-  - name: "COURSE"
-  - name: "QUIZ"
+  - name: "User"
+  - name: "Course"
+  - name: "Quiz"
 paths:
   /users:
     get:
       tags:
-        - "COURSE"
+        - "User"
       summary: "Get user's information"
       responses:
         200:
@@ -23,16 +23,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/definitions/User"
+                $ref: "#/components/schemas/User"
         400:
           description: "Bad request"
         404:
           description: "Not found"
       security:
-        - basic-auth: []
+        - bearerAuth: []
     put:
       tags:
-        - "USER"
+        - "User"
       summary: "Update user"
       description: "This can only be done by the logged in user."
       operationId: "updateUser"
@@ -47,7 +47,7 @@ paths:
         content: 
           application/json:
             schema:
-              $ref: "#/definitions/User"
+              $ref: "#/components/schemas/User"
         description: "Updated user object"
         required: true
       responses:
@@ -56,12 +56,10 @@ paths:
         404:
           description: "User not found"
       security:
-        - basic-auth:
-            - "write:user"
-            - "read:user"
+        - bearerAuth: []
     delete:
       tags:
-        - "USER"
+        - "User"
       summary: "Delete user"
       description: "This can only be done by the logged in user."
       operationId: "deleteUser"
@@ -78,12 +76,10 @@ paths:
         404:
           description: "User not found"
       security:
-        - basic-auth:
-            - "write:user"
-            - "read:user"
+        - bearerAuth: []
     post:
       tags:
-        - "USER"
+        - "User"
       summary: "Create user"
       description: "This can only be done by the logged in user."
       operationId: "createUser"
@@ -91,7 +87,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/definitions/User"
+              $ref: "#/components/schemas/User"
 
         description: "Created user"
         required: true
@@ -101,7 +97,7 @@ paths:
   /users/login:
     post:
       tags:
-        - "USER"
+        - "User"
       summary: "Logs user into the system"
       description: ""
       operationId: "loginUser"
@@ -109,7 +105,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/definitions/LoginRequest"
+              $ref: "#/components/schemas/LoginRequest"
 
         description: "Login user input"
         required: true
@@ -125,7 +121,7 @@ paths:
   /users/logout:
     post:
       tags:
-        - "USER"
+        - "User"
       summary: "Logs out current logged in user session"
       description: ""
       operationId: "logoutUser"
@@ -137,10 +133,10 @@ paths:
   /courses:
     get:
       tags:
-      - "COURSE"
+      - "Course"
       parameters:
-        - $ref: '#parameters/limit'
-        - $ref: '#parameters/offset'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
       responses:
         200:
           description: "successful operation"
@@ -207,7 +203,7 @@ components:
           type: "string"
     CoursesDashboard:
       allOf:
-        - $ref: '#/definitions/Course'
+        - $ref: '#/components/schemas/Course'
         - type: object
           properties:
             userCourseStatus:
@@ -262,8 +258,6 @@ components:
   responses:
     UnauthorizedError:
       description: Access token is missing or invalid
-security:
-  - bearerAuth: []
 externalDocs:
   description: "More details"
   url: "http://swagger.io"
