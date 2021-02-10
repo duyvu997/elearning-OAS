@@ -15,7 +15,7 @@ paths:
   /users:
     get:
       tags:
-        - "USER"
+        - "COURSE"
       summary: "Get user's information"
       responses:
         200:
