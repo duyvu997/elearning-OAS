@@ -23,7 +23,6 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/VerifyCodeBody"           
-        description: "Created user"
         required: true
       responses:
         200:
@@ -32,6 +31,24 @@ paths:
           description: "Bad request"
         404:
           description: "Not found"
+  /users/childrens:
+    get:
+      tags:
+        - "User"
+      summary: Get username and avatar related to text
+      parameters:
+        - in: query
+          name: username 
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChildrenUsers"
   /users:
     get:
       tags:
@@ -400,6 +417,19 @@ components:
           type: string
         verifyCode:
           type: string
+    ChildrenUser:
+      type: object
+      properties:
+        username:
+          type: string
+        name:
+          type: string
+        avatarUrl:
+          type: string
+    ChildrenUsers:
+      type: array
+      items:
+        $ref: '#/components/schemas/ChildrenUser'
     LoginResponse:
       type: object
       properties:
