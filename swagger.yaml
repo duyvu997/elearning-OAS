@@ -11,7 +11,27 @@ tags:
   - name: "User"
   - name: "Course"
   - name: "Quiz"
+  - name: "Auth"
 paths:
+  /verify-code: 
+    post:
+      tags:
+        - "Auth"
+      summary: "Submit code to verify user by username."
+      requestBody: 
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VerifyCodeBody"           
+        description: "Created user"
+        required: true
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Bad request"
+        404:
+          description: "Not found"
   /users:
     get:
       tags:
@@ -197,8 +217,6 @@ paths:
             description: "Bad request"
           404:
             description: "Courses not found"
-    
-
 components:
   schemas:
     ApiResponse:
@@ -375,6 +393,13 @@ components:
             type: array
             items: 
               $ref: '#/components/schemas/Lesson'
+    VerifyCodeBody:
+      type: object
+      properties:
+        username:
+          type: string
+        verifyCode:
+          type: string
     LoginResponse:
       type: object
       properties:
