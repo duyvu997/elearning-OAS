@@ -70,21 +70,12 @@ CoursesResponse:
   items:
     $ref: '#/CoursesResponseItem'
   example:
-    [
-      {
-        tagName: popular,
-        result: []
-      },
-      {
-        tagName: newest,
-        result: []
-      },
-      {
-        tagName: by-user,
-        result: []
-      },
-      {
-        tagName: all,
-        result: []
-      },
-    ]
+    - tagName: BY-USER,
+      result: []
+    - tagName: POPULAR,
+      result: []
+    - tagName: NEWEST,
+      result: []
+    - tagName: ALL,
+      result: []
+
