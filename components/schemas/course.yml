@@ -16,7 +16,7 @@ Course:
 
 GeneralCourse:
   allOf:
-    - $ref: '#Course'
+    - $ref: '#/Course'
     - type: object
       properties:
         userCourseStatus:
@@ -37,7 +37,7 @@ GeneralCourse:
 
 PersonalCourse:
   allOf:
-    - $ref: '#Course'
+    - $ref: '#/Course'
     - type: object
       properties:
         userCourseProcess:
@@ -55,20 +55,20 @@ CoursesResponseItem:
   type: object
   properties:
     tagName:
-      type: string # enum:  by-user | popular | newest | all
+      type: string
       enum: [BY-USER, POPULAR, NEWEST, ALL]
     result:
       type: array
       items:
         oneOf:
-          - $ref: '#GeneralCourse'
-          - $ref: '#PersonalCourse'
+          - $ref: '#/GeneralCourse'
+          - $ref: '#/PersonalCourse'
 
 
 CoursesResponse:
   type: array
   items:
-    $ref: '#CoursesResponseItem'
+    $ref: '#/CoursesResponseItem'
   example:
     [
       {
