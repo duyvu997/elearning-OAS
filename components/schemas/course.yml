@@ -1,0 +1,33 @@
+Course:
+  type: "object"
+  properties:
+    name:
+      type: "string"
+    duration:
+      type: "string"
+    members:
+      type: "integer"
+      format: "int32"
+    authors:
+      type: "string"
+    courseImageUrl:
+      type: "string"
+GeneralCourse:
+  allOf:
+    - $ref: '#Course'
+    - type: object
+      properties:
+        userCourseStatus:
+          type: "string"
+          enum: [NOT_REGISTER, PENDING]
+          description: >
+            Explanations: <br>
+            * `NOT_REGISTER` - user not register this course yet. <br>
+            * `PENDING` - user is waiting for approval to join this course.
+      example:
+        name: Ngữ Văn 6
+        author: Ms Vy Thuy
+        userCourseStatus: NOT_REGISTER
+        duration: 6h 30min # duration in min
+        members: 49
+        courseImageUrl: https://orange-juice.com/uploads/2017/06/gg-1.jpg
