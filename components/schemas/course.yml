@@ -13,10 +13,9 @@ Course:
     courseImageUrl:
       type: "string"
 
-
 GeneralCourse:
   allOf:
-    - $ref: '#/Course'
+    - $ref: "#/Course"
     - type: object
       properties:
         userCourseStatus:
@@ -27,17 +26,15 @@ GeneralCourse:
             * `NOT_REGISTER` - user not register this course yet. <br>
             * `PENDING` - user is waiting for approval to join this course.
 
-
 PersonalCourse:
   allOf:
-    - $ref: '#/Course'
+    - $ref: "#/Course"
     - type: object
       properties:
         userCourseProcess:
           type: integer
           maximum: 100
           minimum: 0
-
 
 CoursesResponse:
   type: array
@@ -51,7 +48,21 @@ CoursesResponse:
         type: array
         items:
           oneOf:
-            - $ref: '#/GeneralCourse'
-            - $ref: '#/PersonalCourse'
+            - $ref: "#/GeneralCourse"
+            - $ref: "#/PersonalCourse"
 
-
+CourseDetails:
+  type: object
+  properties:
+    id:
+      type: number
+    name:
+      type: string
+    title:
+      type: string
+    description:
+      type: string
+    lessons:
+      type: array
+      items:
+        $ref: "./lesson.yml#/Lesson"

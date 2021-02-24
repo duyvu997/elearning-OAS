@@ -151,6 +151,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/LoginResponse"
+              example:
+                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwidXNlcm5hbWUiOiJqb2huMDkwOSIsImlhdCI6MTUxNjIzOTAyMn0.aj5KcumubmGe3Twtm7vLWbe7Ljt806Hj_OmqVsbjGVU \
+                Please decode for more information: using https://jwt.io/'
         400:
           description: "Invalid username/password supplied"
   /users/logout:
@@ -168,10 +171,10 @@ paths:
   /courses:
     get:
       tags:
-      - "Course"
+        - "Course"
       parameters:
-        - $ref: '#/components/parameters/limit'
-        - $ref: '#/components/parameters/offset'
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/offset"
         - in: query
           name: by-user
           schema:
@@ -213,7 +216,7 @@ paths:
   /courses/{courseId}:
     get:
       tags:
-      - "Course"
+        - "Course"
       responses:
         200:
           description: "successful operation"
@@ -230,157 +233,66 @@ paths:
       tags:
         - "Course"
       responses:
-          200:
-            description: "successful operation"
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/LessonDetails"
-          400:
-            description: "Bad request"
-          404:
-            description: "Courses not found"
+        200:
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LessonDetails"
+        400:
+          description: "Bad request"
+        404:
+          description: "Courses not found"
+
 components:
+  #------------------------------------------------------------------#
   schemas:
-    ApiResponse:
-      type: "object"
-      properties:
-        code:
-          type: "integer"
-          format: "int32"
-        type:
-          type: "string"
-        message:
-          type: "string"
+    ##------------------------
     User:
-      $ref: './components/schemas/user.yml#/User'
-    Course:
-      $ref: './components/schemas/course.yml#/Course'
-    GeneralCourse:
-      $ref: './components/schemas/course.yml#/GeneralCourse'
-    PersonalCourse:
-      $ref: './components/schemas/course.yml#/PersonalCourse'
-    CoursesResponse:
-      $ref: './components/schemas/course.yml#/CoursesResponse'
-
-    Lesson:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        lessonImageUrl:
-          type: string
-        lessonDesc:
-          type: string
-        status:
-          type: string
-          enum: [DONE, LEARNING, LOCKED]
-    LessonDetails:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        lessonDesc:
-          type: string
-        resources:
-          type: array
-          items:
-            $ref: '#/components/schemas/LessonResource'
-        quizzes:
-          type: array
-          items:
-            $ref: '#/components/schemas/Quiz'
-    Quiz:
-      type: object
-      properties:
-        name:
-          type: string
-    LessonResource:
-      type: object
-      properties:
-        name:
-          type: string
-    CourseDetails:
-        type: object
-        properties:
-          id:
-            type: number
-          name:
-            type: string
-          title:
-            type: string
-          description:
-            type: string
-          lessons:
-            type: array
-            items:
-              $ref: '#/components/schemas/Lesson'
-    VerifyCodeBody:
-      type: object
-      properties:
-        username:
-          type: string
-        verifyCode:
-          type: string
-    ChildrenUser:
-      type: object
-      properties:
-        username:
-          type: string
-        name:
-          type: string
-        avatarUrl:
-          type: string
+      $ref: "./components/schemas/user.yml#/User"
     ChildrenUsers:
-      type: array
-      items:
-        $ref: '#/components/schemas/ChildrenUser'
+      $ref: "./components/schemas/user.yml#/ChildrenUsers"
+    ##------------------------
+    Course:
+      $ref: "./components/schemas/course.yml#/Course"
+    GeneralCourse:
+      $ref: "./components/schemas/course.yml#/GeneralCourse"
+    PersonalCourse:
+      $ref: "./components/schemas/course.yml#/PersonalCourse"
+    CoursesResponse:
+      $ref: "./components/schemas/course.yml#/CoursesResponse"
+    CourseDetails:
+      $ref: "./components/schemas/course.yml#/CourseDetails"
+    ##------------------------
+    Lesson:
+      $ref: "./components/schemas/lesson.yml#/Lesson"
+    LessonDetails:
+      $ref: "./components/schemas/lesson.yml#/LessonDetails"
+    LessonResource:
+      $ref: "./components/schemas/lesson.yml#/LessonResource"
+    ##------------------------
+    Quiz:
+      $ref: "./components/schemas/quiz.yml#/Quiz"
+    ##------------------------
+    VerifyCodeBody:
+      $ref: "./components/schemas/auth.yml#/VerifyCodeBody"
     LoginResponse:
-      type: object
-      properties:
-        access_token:
-          type: string
-          example: "example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwidXNlcm5hbWUiOiJqb2huMDkwOSIsImlhdCI6MTUxNjIzOTAyMn0.aj5KcumubmGe3Twtm7vLWbe7Ljt806Hj_OmqVsbjGVU'
-          Please decode for more information: using https://jwt.io/"
+      $ref: "./components/schemas/auth.yml#/LoginResponse"
     LoginRequest:
-      type: object
-      properties:
-        username:
-          type: string
-        password:
-          type: string
-
+      $ref: "./components/schemas/auth.yml#/LoginRequest"
+  #------------------------------------------------------------------#
   parameters:
     offset:
-      in: query
-      name: offset
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-      description: The number of items to skip before starting to collect the result set.
+      $ref: "./components/parameters/general-parameter.yml#/offset"
     limit:
-      in: query
-      name: limit
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 50
-        default: 5
-      description: The numbers of items to return.
-
+      $ref: "./components/parameters/general-parameter.yml#/limit"
+  #------------------------------------------------------------------#
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
-
+  #------------------------------------------------------------------#
   responses:
     UnauthorizedError:
       description: Access token is missing or invalid

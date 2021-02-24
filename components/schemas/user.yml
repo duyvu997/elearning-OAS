@@ -26,3 +26,14 @@ User:
       format: "int32"
       description: "Admin - Parent - Children"
 
+ChildrenUsers:
+  type: array
+  items:
+    type: object
+    properties:
+      username:
+        type: string
+      name:
+        type: string
+      avatarUrl:
+        type: string

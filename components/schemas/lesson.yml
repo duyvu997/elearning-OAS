@@ -1,0 +1,38 @@
+Lesson:
+  type: object
+  properties:
+    id:
+      type: string
+    name:
+      type: string
+    lessonImageUrl:
+      type: string
+    lessonDesc:
+      type: string
+    status:
+      type: string
+      enum: [DONE, LEARNING, LOCKED]
+
+LessonDetails:
+  type: object
+  properties:
+    id:
+      type: string
+    name:
+      type: string
+    lessonDesc:
+      type: string
+    resources:
+      type: array
+      items:
+        $ref: "#/LessonResource"
+    quizzes:
+      type: array
+      items:
+        $ref: "./quiz.yml#/Quiz"
+
+LessonResource:
+  type: object
+  properties:
+    name:
+      type: string
