@@ -253,53 +253,12 @@ components:
     GeneralCourse:
       $ref: './components/schemas/course.yml#/GeneralCourse'
     PersonalCourse:
-      allOf:
-        - $ref: '#/components/schemas/Course'
-        - type: object
-          properties:
-            userCourseProcess:
-              type: integer
-              maximum: 100
-              minimum: 0
-          example:
-            name: Ngữ Văn 6
-            author: "Ms Vy Thuy"
-            userCourseProcess: 83
-            courseImageUrl: https://orange-juice.com/uploads/2017/06/gg-1.jpg
+      $ref: './components/schemas/course.yml#/PersonalCourse'
     CoursesResponseItem:
-      type: object
-      properties:
-        tagName:
-          type: string # enum:  by-user | popular | newest | all
-        result:
-          type: array
-          items:
-            oneOf:
-              - $ref: '#/components/schemas/GeneralCourse'
-              - $ref: '#/components/schemas/PersonalCourse'
+      $ref: './components/schemas/course.yml#/CoursesResponseItem'
     CoursesResponse:
-      type: array
-      items:
-        $ref: '#components/schemas/CoursesResponseItem'
-      example:
-        [
-          {
-            tagName: popular,
-            result: []
-          },
-          {
-            tagName: newest,
-            result: []
-          },
-          {
-            tagName: by-user,
-            result: []
-          },
-          {
-            tagName: all,
-            result: []
-          },
-        ]
+      $ref: './components/schemas/course.yml#/CoursesResponse'
+
     Lesson:
       type: object
       properties:
@@ -327,7 +286,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LessonResource'
-        quizes:
+        quizzes:
           type: array
           items:
             $ref: '#/components/schemas/Quiz'
