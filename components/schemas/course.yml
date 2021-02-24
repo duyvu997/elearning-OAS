@@ -26,13 +26,6 @@ GeneralCourse:
             Explanations: <br>
             * `NOT_REGISTER` - user not register this course yet. <br>
             * `PENDING` - user is waiting for approval to join this course.
-      example:
-        name: Ngữ Văn 6
-        author: Ms Vy Thuy
-        userCourseStatus: NOT_REGISTER
-        duration: 6h 30min # duration in min
-        members: 49
-        courseImageUrl: https://orange-juice.com/uploads/2017/06/gg-1.jpg
 
 
 PersonalCourse:
@@ -44,38 +37,21 @@ PersonalCourse:
           type: integer
           maximum: 100
           minimum: 0
-      example:
-        name: Ngữ Văn 6
-        author: "Ms Vy Thuy"
-        userCourseProcess: 83
-        courseImageUrl: https://orange-juice.com/uploads/2017/06/gg-1.jpg
-
-
-CoursesResponseItem:
-  type: object
-  properties:
-    tagName:
-      type: string
-      enum: [BY-USER, POPULAR, NEWEST, ALL]
-    result:
-      type: array
-      items:
-        oneOf:
-          - $ref: '#/GeneralCourse'
-          - $ref: '#/PersonalCourse'
 
 
 CoursesResponse:
   type: array
   items:
-    $ref: '#/CoursesResponseItem'
-  example:
-    - tagName: BY-USER,
-      result: []
-    - tagName: POPULAR,
-      result: []
-    - tagName: NEWEST,
-      result: []
-    - tagName: ALL,
-      result: []
+    type: object
+    properties:
+      tagName:
+        type: string
+        enum: [BY-USER, POPULAR, NEWEST, ALL]
+      result:
+        type: array
+        items:
+          oneOf:
+            - $ref: '#/GeneralCourse'
+            - $ref: '#/PersonalCourse'
+
 

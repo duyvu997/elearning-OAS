@@ -6,6 +6,8 @@ User:
       format: "int64"
     username:
       type: "string"
+    birthday:
+      type: "string"
     name:
       type: "string"
     email:

@@ -31,11 +31,11 @@ paths:
           description: "Bad request"
         404:
           description: "Not found"
-  /users/childrens:
+  /users/children:
     get:
       tags:
         - "User"
-      summary: Get username and avatar related to text
+      summary: Get username and avatar related to child user name
       parameters:
         - in: query
           name: username
@@ -125,7 +125,6 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/User"
-
         description: "Created user"
         required: true
       responses:
@@ -139,13 +138,12 @@ paths:
       description: ""
       operationId: "loginUser"
       requestBody:
+        required: true
+        description: "Login user input"
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/LoginRequest"
-
-        description: "Login user input"
-        required: true
       responses:
         200:
           description: "successful operation"
@@ -192,7 +190,6 @@ paths:
             type: boolean
           required: false
           description: "Get courses with tag newest"
-
       responses:
         200:
           description: "successful operation"
@@ -200,6 +197,15 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CoursesResponse"
+              example:
+                - tagName: ALL
+                  result: []
+                - tagName: NEWEST
+                  result: []
+                - tagName: POPULAR
+                  result: []
+                - tagName: BY-USER
+                  result: []
         400:
           description: "Bad request"
         404:
@@ -254,8 +260,6 @@ components:
       $ref: './components/schemas/course.yml#/GeneralCourse'
     PersonalCourse:
       $ref: './components/schemas/course.yml#/PersonalCourse'
-    CoursesResponseItem:
-      $ref: './components/schemas/course.yml#/CoursesResponseItem'
     CoursesResponse:
       $ref: './components/schemas/course.yml#/CoursesResponse'
 
