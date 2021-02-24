@@ -13,16 +13,16 @@ tags:
   - name: "Quiz"
   - name: "Auth"
 paths:
-  /verify-code: 
+  /verify-code:
     post:
       tags:
         - "Auth"
       summary: "Submit code to verify user by username."
-      requestBody: 
+      requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/VerifyCodeBody"           
+              $ref: "#/components/schemas/VerifyCodeBody"
         required: true
       responses:
         200:
@@ -38,7 +38,7 @@ paths:
       summary: Get username and avatar related to text
       parameters:
         - in: query
-          name: username 
+          name: username
           schema:
             type: string
           required: true
@@ -76,12 +76,12 @@ paths:
       parameters:
         - in: "path"
           name: "username"
-          schema: 
+          schema:
             type: "string"
           description: "name that need to be updated"
           required: true
-      requestBody: 
-        content: 
+      requestBody:
+        content:
           application/json:
             schema:
               $ref: "#/components/schemas/User"
@@ -103,7 +103,7 @@ paths:
       parameters:
         - in: "path"
           name: "username"
-          schema: 
+          schema:
             type: "string"
           description: "The name that needs to be deleted"
           required: true
@@ -120,7 +120,7 @@ paths:
       summary: "Create user"
       description: "This can only be done by the logged in user."
       operationId: "createUser"
-      requestBody: 
+      requestBody:
         content:
           application/json:
             schema:
@@ -138,7 +138,7 @@ paths:
       summary: "Logs user into the system"
       description: ""
       operationId: "loginUser"
-      requestBody: 
+      requestBody:
         content:
           application/json:
             schema:
@@ -176,23 +176,23 @@ paths:
         - $ref: '#/components/parameters/offset'
         - in: query
           name: by-user
-          schema: 
+          schema:
             type: boolean
           required: false
           description: "Get user name in token then find all courses of user."
         - in: query
           name: popular
-          schema: 
+          schema:
             type: boolean
           required: false
           description: "Get courses with tag popular."
         - in: query
           name: newest
-          schema: 
+          schema:
             type: boolean
           required: false
           description: "Get courses with tag newest"
-          
+
       responses:
         200:
           description: "successful operation"
@@ -205,7 +205,7 @@ paths:
         404:
           description: "Courses not found"
   /courses/{courseId}:
-    get: 
+    get:
       tags:
       - "Course"
       responses:
@@ -221,7 +221,7 @@ paths:
           description: "Courses not found"
   /courses/{courseId}/lessons/{lessonId}:
     get:
-      tags: 
+      tags:
         - "Course"
       responses:
           200:
@@ -247,32 +247,7 @@ components:
         message:
           type: "string"
     User:
-      type: "object"
-      properties:
-        id:
-          type: "integer"
-          format: "int64"
-        username:
-          type: "string"
-        name:
-          type: "string"
-        email:
-          type: "string"
-        password:
-          type: "string"
-        phone:
-          type: "string"
-        avatarUrl:
-          type: "string"
-          description: "example: https://orange-juice.com/uploads/2017/06/gg-1.jpg"
-        gender:
-          type: "string"
-        userRole:
-          type: "integer"
-          format: "int32"
-          description: "Admin - Parent - Children"
-      xml:
-        name: "User"
+      $ref: './components/schemas/user.yml#/User'
     Course:
       type: "object"
       properties:
@@ -299,12 +274,12 @@ components:
                 Explanations: <br>
                 * `NOT_REGISTER` - user not register this course yet. <br>
                 * `PENDING` - user is waiting for approval to join this course.
-          example: 
+          example:
             name: Ngữ Văn 6
             author: Ms Vy Thuy
-            userCourseStatus: NOT_REGISTER 
-            duration: 6h 30min # duration in min 
-            members: 49 # duration in min 
+            userCourseStatus: NOT_REGISTER
+            duration: 6h 30min # duration in min
+            members: 49 # duration in min
             courseImageUrl: https://orange-juice.com/uploads/2017/06/gg-1.jpg
     PersonalCourse:
       allOf:
@@ -315,20 +290,20 @@ components:
               type: integer
               maximum: 100
               minimum: 0
-          example: 
+          example:
             name: Ngữ Văn 6
             author: "Ms Vy Thuy"
             userCourseProcess: 83
             courseImageUrl: https://orange-juice.com/uploads/2017/06/gg-1.jpg
     CoursesResponseItem:
       type: object
-      properties: 
+      properties:
         tagName:
           type: string # enum:  by-user | popular | newest | all
         result:
           type: array
           items:
-            oneOf: 
+            oneOf:
               - $ref: '#/components/schemas/GeneralCourse'
               - $ref: '#/components/schemas/PersonalCourse'
     CoursesResponse:
@@ -348,16 +323,16 @@ components:
           {
             tagName: by-user,
             result: []
-          }, 
+          },
           {
             tagName: all,
             result: []
           },
-        ] 
-    Lesson: 
+        ]
+    Lesson:
       type: object
       properties:
-        id: 
+        id:
           type: string
         name:
           type: string
@@ -365,7 +340,7 @@ components:
           type: string
         lessonDesc:
           type: string
-        status: 
+        status:
           type: string
           enum: [DONE, LEARNING, LOCKED]
     LessonDetails:
@@ -376,10 +351,10 @@ components:
         name:
           type: string
         lessonDesc:
-          type: string 
+          type: string
         resources:
           type: array
-          items: 
+          items:
             $ref: '#/components/schemas/LessonResource'
         quizes:
           type: array
@@ -395,9 +370,9 @@ components:
       properties:
         name:
           type: string
-    CourseDetails: 
+    CourseDetails:
         type: object
-        properties: 
+        properties:
           id:
             type: number
           name:
@@ -408,7 +383,7 @@ components:
             type: string
           lessons:
             type: array
-            items: 
+            items:
               $ref: '#/components/schemas/Lesson'
     VerifyCodeBody:
       type: object
