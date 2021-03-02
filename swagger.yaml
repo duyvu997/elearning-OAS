@@ -12,6 +12,7 @@ tags:
   - name: "Course"
   - name: "Quiz"
   - name: "Auth"
+  - name: "Lesson"
 paths:
   /verify-code:
     post:
@@ -228,10 +229,10 @@ paths:
           description: "Bad request"
         404:
           description: "Courses not found"
-  /courses/{courseId}/lessons/{lessonId}:
+  /lessons/{lessonId}:
     get:
       tags:
-        - "Course"
+        - "Lesson"
       responses:
         200:
           description: "successful operation"
@@ -280,6 +281,8 @@ components:
       $ref: "./components/schemas/auth.yml#/LoginResponse"
     LoginRequest:
       $ref: "./components/schemas/auth.yml#/LoginRequest"
+    UserTokenSchema:
+      $ref: "./components/schemas/auth.yml#/UserTokenSchema"
   #------------------------------------------------------------------#
   parameters:
     offset:

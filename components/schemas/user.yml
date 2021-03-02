@@ -21,6 +21,10 @@ User:
       description: "example: https://orange-juice.com/uploads/2017/06/gg-1.jpg"
     gender:
       type: "string"
+    childrenLinked:
+      type: "array"
+      items:
+        type: "string"
     userRole:
       type: "integer"
       format: "int32"

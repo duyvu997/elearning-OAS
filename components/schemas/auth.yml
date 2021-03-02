@@ -19,3 +19,11 @@ LoginRequest:
       type: string
     password:
       type: string
+
+UserTokenSchema:
+  type: object
+  properties:
+    username:
+      type: string
+    userRole:
+      type: string
