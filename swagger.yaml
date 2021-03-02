@@ -32,11 +32,23 @@ paths:
           description: "Bad request"
         404:
           description: "Not found"
+  /users/{username}/children:
+    get:
+      tags:
+        - "User"
+      summary: Get children of this user.
+      responses:
+        400:
+          description: "Invalid username supplied"
+        404:
+          description: "User not found"
+      security:
+        - bearerAuth: []
   /users/children:
     get:
       tags:
         - "User"
-      summary: Get username and avatar related to child user name
+      summary: Get username and avatar of all children users. 
       parameters:
         - in: query
           name: username
@@ -131,6 +143,7 @@ paths:
       responses:
         default:
           description: "successful operation"
+
   /users/login:
     post:
       tags:
