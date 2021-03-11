@@ -34,5 +34,39 @@ LessonDetails:
 LessonResource:
   type: object
   properties:
-    name:
+    resourceType:
       type: string
+      enum: ["VOCABULARY", REMEMBER, GRAMMAR, VIDEO]
+    contents:
+      type: array
+      items:
+        oneOf:
+          - $ref: "#/VocabularyContent"
+          - $ref: "#/GrammarContent"
+          - $ref: "#/RememberContent"
+
+VocabularyContent:
+  type: object
+  properties:
+    vocabulary:
+      type: string
+    vocabType:
+      type: string
+    pronounce:
+      type: string
+    meaning:
+      type: string
+
+GrammarContent:
+  type: object
+  properties:
+    title:
+      type: string
+    subContent:
+      type: array
+      items:
+        type: string
+
+RememberContent:
+  type: string
+  example: When something is happening now the present continuous
