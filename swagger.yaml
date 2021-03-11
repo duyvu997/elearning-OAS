@@ -48,7 +48,7 @@ paths:
     get:
       tags:
         - "User"
-      summary: Get username and avatar of all children users. 
+      summary: Get username and avatar of all children users.
       parameters:
         - in: query
           name: username
@@ -214,15 +214,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CoursesResponse"
-              example:
-                - tagName: ALL
-                  result: []
-                - tagName: NEWEST
-                  result: []
-                - tagName: POPULAR
-                  result: []
-                - tagName: BY-USER
-                  result: []
+              
+
         400:
           description: "Bad request"
         404:
@@ -257,7 +250,33 @@ paths:
           description: "Bad request"
         404:
           description: "Courses not found"
-
+  /quizzes/submit:
+    post:
+      summary: Submit quiz result to server
+      tags:
+        - "Quiz"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QuizSubmitForm"
+              example:
+                - tagName: ALL
+                  result: []
+                - tagName: NEWEST
+                  result: []
+                - tagName: POPULAR
+                  result: []
+                - tagName: BY-USER
+                  result: []
+      responses:
+        204:
+          description: "successful operation - No content"
+        400:
+          description: "Bad request"
+        404:
+          description: "Courses not found"
 components:
   #------------------------------------------------------------------#
   schemas:
@@ -287,6 +306,8 @@ components:
     ##------------------------
     Quiz:
       $ref: "./components/schemas/quiz.yml#/Quiz"
+    QuizSubmitForm:
+      $ref: "./components/schemas/quiz.yml#/QuizSubmitForm"
     ##------------------------
     VerifyCodeBody:
       $ref: "./components/schemas/auth.yml#/VerifyCodeBody"

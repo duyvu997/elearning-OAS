@@ -3,3 +3,19 @@ Quiz:
   properties:
     name:
       type: string
+
+QuizSubmitForm:
+  type: object
+  properties:
+    averageScore:
+      type: number
+    ingredientsScore:
+      type: array
+      items:
+        type: object
+        properties:
+          ingredientType:
+            type: "string"
+            enum: [MATCHING, TRUE_OR_FALSE, COMPLETE_SENTENCE, CHOOSE_ANSWER]
+          ingredientScore:
+            type: number
