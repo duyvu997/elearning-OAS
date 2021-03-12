@@ -5,8 +5,7 @@ info:
   version: "1.0.0"
   description: "This is a APIs of Orange-Juice e-learning server."
 servers:
-  - url: https://orange-juice.edu.com/v1/
-    description: Optional server development description
+  - url: https://orangejuicev2.herokuapp.com
 tags:
   - name: "User"
   - name: "Course"
@@ -143,7 +142,6 @@ paths:
       responses:
         default:
           description: "successful operation"
-
   /users/login:
     post:
       tags:
@@ -186,6 +184,7 @@ paths:
     get:
       tags:
         - "Course"
+      summary: Get list of courses by each tags
       parameters:
         - $ref: "#/components/parameters/limit"
         - $ref: "#/components/parameters/offset"
@@ -207,6 +206,12 @@ paths:
             type: boolean
           required: false
           description: "Get courses with tag newest"
+        - in: query
+          name: all
+          schema:
+            type: boolean
+          required: false
+          description: "Get courses with tag all"
       responses:
         200:
           description: "successful operation"
@@ -222,6 +227,14 @@ paths:
     get:
       tags:
         - "Course"
+      summary: Get course details by ID
+      parameters:
+        - in: path
+          name: courseId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the course to get
       responses:
         200:
           description: "successful operation"
@@ -237,6 +250,14 @@ paths:
     get:
       tags:
         - "Lesson"
+      summary: Get lesson details by ID
+      parameters:
+        - in: path
+          name: lessonId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the lesson to get
       responses:
         200:
           description: "successful operation"
@@ -244,47 +265,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/LessonDetails"
-              example:
-                id: 1
-                name: "UNIT 1: MY NEW SCHOOL"
-                lessonDesc: A special day
-                resources:
-                  - resourceType: VOCABULARY
-                    contents:
-                      - vocabulary: physics
-                        vocabType: (noun)
-                        pronounce: "['fiziks]"
-                        meaning: vat ly hoc
-                  - resourceType: GRAMMAR
-                    contents:
-                      - title: The present simple
-                        subContent:
-                          [
-                            Positive,
-                            I/ you/ we/ they + V (work/ study),
-                            He/ she/ it + V-s/ V-es (works/ studies),
-                          ]
-                  - resourceType: REMEMBER
-                    contents:
-                      [
-                        "The present simple verbs with he/ she/ it need an s/es",
-                        "When something often happens or is fixed: the present simple",
-                        "When something is happening now: the present continuous",
-                      ]
-                  - resourceType: VIDEO
-                    contents:
-                      [
-                        "https://www.youtube.com/watch?v=REKHhDWN-s",
-                        "https://www.youtube.com/watch?v=REKHhDWN-s",
-                        "https://www.youtube.com/watch?v=REKHhDWN-s",
-                      ]
-                quizzes:
-                  - id: 1
-                    name: exercise 21
-                  - id: 2
-                    name: exercise 22
-
-
         400:
           description: "Bad request"
         404:
@@ -300,18 +280,25 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/QuizSubmitForm"
-              example:
-                - tagName: ALL
-                  result: []
-                - tagName: NEWEST
-                  result: []
-                - tagName: POPULAR
-                  result: []
-                - tagName: BY-USER
-                  result: []
       responses:
         204:
           description: "successful operation - No content"
+        400:
+          description: "Bad request"
+        404:
+          description: "Courses not found"
+  /quizzes/{quizId}:
+    get:
+      tags:
+        - "Quiz"
+      summary: Get quiz details
+      responses:
+        200:
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuizDetails"
         400:
           description: "Bad request"
         404:
@@ -347,6 +334,8 @@ components:
       $ref: "./components/schemas/quiz.yml#/Quiz"
     QuizSubmitForm:
       $ref: "./components/schemas/quiz.yml#/QuizSubmitForm"
+    QuizDetails:
+      $ref: "./components/schemas/quiz.yml#/QuizDetails"
     ##------------------------
     VerifyCodeBody:
       $ref: "./components/schemas/auth.yml#/VerifyCodeBody"
