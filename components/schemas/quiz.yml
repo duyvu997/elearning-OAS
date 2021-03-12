@@ -61,21 +61,81 @@ QuizDetails:
             type: string
           questionDescription:
             type: string
+          questionExtraData:
+            type: object
+            properties:
+              dataType:
+                type: string
+                enum: [true_or_false, multiple, fill, matching]
+              resource:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    questionContent:
+                      type: object
+                      properties:
+                        contentType:
+                          type: string
+                          enum: [image, video, audio]
+                        content:
+                          type: string
+                    answerContent:
+                      type: object
+                      properties:
+                        contentType:
+                          type: string
+                          enum: [image, video, audio]
+                        content:
+                          type: string
   example:
     title: Match the words with the school things
     duration: 3600
     history:
-      - timestamp: '2020-11-11 13:40:58'
+      - timestamp: "2020-11-11 13:40:58"
         completedPercent: 100
         status: UP
-      - timestamp: '2020-11-11 14:40:58'
+      - timestamp: "2020-11-11 14:40:58"
         completedPercent: 90
         status: UP
-      - timestamp: '2020-11-11 15:40:58'
+      - timestamp: "2020-11-11 15:40:58"
         completedPercent: 80
         status: UP
     questions:
-      - questionType: 'MATCHING'
-        questionTitle: ''
-        questionDescription: Listen and choose correct answers
+      - questionType: "MATCHING"
+        questionTitle: "Match the words with the school things"
+        questionDescription: ""
+        questionExtraData:
+          dataType: matching
+          data:
+            - questionContent:
+                contentType: image
+                content: "http://image.url1.com/"
+              answerContent:
+                contentType: text
+                content: pencil
+            - questionContent:
+                contentType: image
+                content: "http://image.url2.com/"
+              answerContent:
+                contentType: text
+                content: pen
+      - questionType: "TRUE_OR_FALSE"
+        questionTitle: "True or false"
+        questionDescription: "Listen and choose true (T) or false (F)"
+        questionExtraData:
+          dataType: matching
+          resource:
+            - questionContent:
+                contentType: image
+                content: "http://image.url1.com/"
+              answerContent:
+                contentType: text
+                content: pencil
+            - questionContent:
+                contentType: image
+                content: "http://image.url2.com/"
+              answerContent:
+                contentType: text
+                content: pen
 
