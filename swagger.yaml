@@ -35,6 +35,12 @@ paths:
     get:
       tags:
         - "User"
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
       summary: Get children of this user.
       responses:
         400:
@@ -174,8 +180,6 @@ paths:
         - "User"
       summary: "Logs out current logged in user session"
       description: ""
-      operationId: "logoutUser"
-      parameters: []
       responses:
         default:
           description: "successful operation"
@@ -292,6 +296,13 @@ paths:
       tags:
         - "Quiz"
       summary: Get quiz details
+      parameters:
+        - in: path
+          name: quizId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the quiz to get
       responses:
         200:
           description: "successful operation"
