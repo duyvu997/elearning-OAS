@@ -20,14 +20,14 @@ QuizSubmitForm:
           ingredientScore:
             type: number
   example:
-    - tagName: ALL
-      result: []
-    - tagName: NEWEST
-      result: []
-    - tagName: POPULAR
-      result: []
-    - tagName: BY-USER
-      result: []
+    averageScore: 95
+    ingredientsScore:
+      - ingredientType: MATCHING
+        ingredientScore: 95
+      - ingredientType: TRUE_OR_FALSE
+        ingredientScore: 95
+      - ingredientType: COMPLETE_SENTENCE
+        ingredientScore: 95
 
 QuizDetails:
   type: object
@@ -138,4 +138,3 @@ QuizDetails:
               answerContent:
                 contentType: text
                 content: pen
-
