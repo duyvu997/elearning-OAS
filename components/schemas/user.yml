@@ -38,7 +38,7 @@ User:
     name: Duy Vu
     email: vduy@yopmail.com
     password: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'
-    phone: 0335214215
+    phone: '0335214215'
     avatarUrl: http://image.url1.com/
     gender: male
     childrenLinked: [pop, kid]
@@ -102,6 +102,7 @@ ChildStatistics:
           type: integer
         totalLearningTime:
           type: integer
+          description: in minutes
         quizzesStat:
           type: object
           properties:
@@ -117,6 +118,28 @@ ChildStatistics:
               type: integer
             emptyAnswers:
               type: integer
+  example:
+    id: 1
+    username: pop1234
+    birthday: '01-02-2002'
+    name: Pop
+    email: null
+    password: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'
+    phone: '0335214215'
+    avatarUrl: http://image.url1.com/
+    gender: male
+    childrenLinked: []
+    userRole: CHILDREN
+    parentEmail: vduy@yopmail.com
+    completedCourse: 20
+    totalLearningTime: 3600
+    quizzesStat:
+      done: 43
+      highestScore: 98
+      lowestScore: 76
+      correctAnswers: 100
+      incorrectAnswers: 20
+      emptyAnswers: 12
 
 ChildrenStatistics:
   type: array
