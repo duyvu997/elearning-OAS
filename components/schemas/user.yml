@@ -1,34 +1,85 @@
 User:
-  type: "object"
+  type: 'object'
   properties:
     id:
-      type: "integer"
-      format: "int64"
+      type: 'integer'
+      format: 'int64'
     username:
-      type: "string"
+      type: 'string'
     birthday:
-      type: "string"
+      type: 'string'
     name:
-      type: "string"
+      type: 'string'
     email:
-      type: "string"
+      type: 'string'
+      nullable: true
     password:
-      type: "string"
+      type: 'string'
     phone:
-      type: "string"
+      type: 'string'
     avatarUrl:
-      type: "string"
-      description: "example: https://orange-juice.com/uploads/2017/06/gg-1.jpg"
+      type: 'string'
     gender:
-      type: "string"
+      type: 'string'
     childrenLinked:
-      type: "array"
+      type: 'array'
       items:
-        type: "string"
+        type: 'string'
     userRole:
-      type: "integer"
-      format: "int32"
-      description: "Admin - Parent - Children"
+      type: 'string'
+      enum: [ADMIN, PARENT, CHILDREN]
+    parentEmail:
+      type: 'string'
+      nullable: true
+  example:
+    id: 1
+    username: vduy
+    birthday: '01-02-1992'
+    name: Duy Vu
+    email: vduy@yopmail.com
+    password: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'
+    phone: 0335214215
+    avatarUrl: http://image.url1.com/
+    gender: male
+    childrenLinked: [pop, kid]
+    userRole: PARENT
+    parentEmail: null
+
+UserInformation:
+  allOf:
+    - $ref: '#/User'
+    - type: 'object'
+      properties:
+        createdAt:
+          type: string
+        parentInformation:
+          nullable: true
+          type: object
+          properties:
+            email:
+              type: string
+            avatarUrl:
+              type: string
+            id:
+              type: number
+  example:
+    id: 12
+    username: pop
+    birthday: '01-02-2015'
+    name: Pop
+    email: null
+    password: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'
+    phone: null
+    avatarUrl: http://image.url22.com/
+    gender: male
+    childrenLinked: []
+    userRole: CHILDREN
+    parentEmail: vduy@yopmail.com
+    createdAt: 2020-11-15 13:40:58
+    parentInformation:
+      email: vduy@yopmail.com
+      avatarUrl: http://image.url1.com/
+      id: 11
 
 ChildrenUsers:
   type: array
@@ -41,3 +92,33 @@ ChildrenUsers:
         type: string
       avatarUrl:
         type: string
+
+ChildStatistics:
+  allOf:
+    - $ref: '#/User'
+    - type: 'object'
+      properties:
+        completedCourse:
+          type: integer
+        totalLearningTime:
+          type: integer
+        quizzesStat:
+          type: object
+          properties:
+            done:
+              type: integer
+            highestScore:
+              type: integer
+            lowestScore:
+              type: integer
+            correctAnswers:
+              type: integer
+            incorrectAnswers:
+              type: integer
+            emptyAnswers:
+              type: integer
+
+ChildrenStatistics:
+  type: array
+  items:
+    $ref: '#/ChildStatistics'
