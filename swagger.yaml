@@ -164,7 +164,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
+              allOf:
+                - $ref: '#/components/schemas/User'
+                - type: object
+                  properties:
+                    dryrun:
+                      type: boolean
+                      description: when dryrun is `true` server should verify and return. should not create new object in db
         description: 'Created user'
         required: true
       responses:

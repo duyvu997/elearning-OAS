@@ -44,6 +44,7 @@ User:
     childrenLinked: [pop, kid]
     userRole: PARENT
     parentEmail: null
+    dryrun: true
 
 UserInformation:
   allOf:
