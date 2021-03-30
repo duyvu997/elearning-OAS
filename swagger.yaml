@@ -31,6 +31,43 @@ paths:
           description: 'Bad request'
         404:
           description: 'Not found'
+  /reset-password:
+    post:
+      tags:
+        - 'Auth'
+      summary: 'Reset password'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordBody'
+        required: true
+      responses:
+        200:
+          description: 'Successful operation'
+        400:
+          description: 'Bad request'
+        404:
+          description: 'Not found'
+  /re-activate:
+    post:
+      tags:
+        - 'Auth'
+      summary: 'Resend email to activated'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordBody'
+        required: true
+      responses:
+        200:
+          description: 'Successful operation'
+        400:
+          description: 'Bad request'
+        404:
+          description: 'Not found'
+  
   /users/{username}/children:
     get:
       tags:
@@ -408,6 +445,8 @@ components:
     ##------------------------
     VerifyCodeBody:
       $ref: './components/schemas/auth.yml#/VerifyCodeBody'
+    ResetPasswordBody:
+      $ref: './components/schemas/auth.yml#/ResetPasswordBody'
     LoginResponse:
       $ref: './components/schemas/auth.yml#/LoginResponse'
     LoginRequest:

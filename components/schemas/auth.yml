@@ -6,6 +6,12 @@ VerifyCodeBody:
     verifyCode:
       type: string
 
+ResetPasswordBody:
+  type: object
+  properties:
+    email:
+      type: string
+
 LoginResponse:
   type: object
   properties:
