@@ -29,15 +29,66 @@ QuizSubmitForm:
       - ingredientType: COMPLETE_SENTENCE
         ingredientScore: 95
 
-QuizDetails:
+SubQuestion:
   type: object
   properties:
-    title:
+    id:
+      type: number
+    puzzle:
+      type: object
+      properties:
+        puzzleContent:
+          type: string
+        puzzleType:
+          type: string
+          enum: [IMAGE, TEXT]
+    answers:
+      type: array
+      items:
+        type: object
+        properties:
+          answerContent:
+            type: string
+          answerType:
+            type: string
+            enum: [TEXT, BOOLEAN]
+          answerStatus:
+            type: string
+
+Question:
+  type: object
+  properties:
+    id:
+      type: number
+    questionTitle:
       type: string
-    duration:
+    questionType:
+      type: string
+      enum: [MATCHING, TRUE_OR_FALSE, COMPLETE_SENTENCE, CHOOSE_ANSWER]
+    questionExtraData:
+      type: array
+      items:
+        type: object
+        properties:
+          content:
+            type: string
+          type:
+            type: string
+            enum: [MP3, VIDEO, IMAGE, TEXT]
+    subQuestions:
+      type: array
+      items:
+        - $ref: "#/SubQuestion"
+
+QuizDetail:
+  type: object
+  properties:
+    quizTitle:
+      type: string
+    durations:
       type: number
       description: time in seconds
-    history:
+    histories:
       type: array
       items:
         type: object
@@ -52,46 +103,11 @@ QuizDetails:
     questions:
       type: array
       items:
-        type: object
-        properties:
-          questionType:
-            type: string
-            enum: [MATCHING, TRUE_OR_FALSE, COMPLETE_SENTENCE, CHOOSE_ANSWER]
-          questionTitle:
-            type: string
-          questionDescription:
-            type: string
-          questionExtraData:
-            type: object
-            properties:
-              dataType:
-                type: string
-                enum: [true_or_false, multiple, fill, matching]
-              resource:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    questionContent:
-                      type: object
-                      properties:
-                        contentType:
-                          type: string
-                          enum: [image, video, audio]
-                        content:
-                          type: string
-                    answerContent:
-                      type: object
-                      properties:
-                        contentType:
-                          type: string
-                          enum: [image, video, audio]
-                        content:
-                          type: string
+        - $ref: "#/Question"
   example:
-    title: Match the words with the school things
-    duration: 3600
-    history:
+    quizTitle: Match the words with the school things
+    durations: 3600
+    histories:
       - timestamp: "2020-11-11 13:40:58"
         completedPercent: 100
         status: UP
@@ -102,39 +118,63 @@ QuizDetails:
         completedPercent: 80
         status: UP
     questions:
-      - questionType: "MATCHING"
+      - id: 1
+        questionType: "MATCHING"
         questionTitle: "Match the words with the school things"
-        questionDescription: ""
         questionExtraData:
-          dataType: matching
-          data:
-            - questionContent:
-                contentType: image
-                content: "http://image.url1.com/"
-              answerContent:
-                contentType: text
-                content: pencil
-            - questionContent:
-                contentType: image
-                content: "http://image.url2.com/"
-              answerContent:
-                contentType: text
-                content: pen
-      - questionType: "TRUE_OR_FALSE"
+        subQuestions:
+          - id: 1
+            puzzle:
+              puzzleContent: "https://s3.us-east-2.amazonaws.com/37749d7b989e0c6.jpg"
+              puzzleType: IMAGE
+            answers:
+              - answerContent: book
+                answerType: TEXT
+                answerStatus: true // should not return.
+
+      - id: 2
+        questionType: "TRUE_OR_FALSE"
         questionTitle: "True or false"
-        questionDescription: "Listen and choose true (T) or false (F)"
         questionExtraData:
-          dataType: matching
-          resource:
-            - questionContent:
-                contentType: image
-                content: "http://image.url1.com/"
-              answerContent:
-                contentType: text
-                content: pencil
-            - questionContent:
-                contentType: image
-                content: "http://image.url2.com/"
-              answerContent:
-                contentType: text
-                content: pen
+          - content: https://s3.us-east-2.amazonaws.com/file-700KB.mp3
+            type: MP3
+        subQuestions:
+          - id: 12
+            puzzle:
+              puzzleContent: 1. Vy and Duy are early
+              puzzleType: TEXT
+            answers:
+              - answerContent: true
+                answerType: boolean
+                answerStatus: true // should not return.
+
+      - id: 3
+        questionType: "CHOOSE_ANSWER"
+        questionTitle: "True or false"
+        questionExtraData:
+          - content: https://s3.us-east-2.amazonaws.com/file-700KB.mp3
+            type: MP3
+        subQuestions:
+          - id: 12
+            puzzle:
+              puzzleContent: He goes to the juco club every Sunday
+              puzzleType: TEXT
+            answers:
+              - answerContent: true
+                answerType: boolean
+                answerStatus: true // should not return.
+      - id: 4
+        questionType: "COMPLETE_SENTENCE"
+        questionTitle: "True or false"
+        questionExtraData:
+          - content: [school, book, homework]
+            type: string
+        subQuestions:
+          - id: 15
+            puzzle:
+              puzzleContent: 1. I do ____________ with my friend,
+              puzzleType: TEXT
+            answers:
+              - answerContent:
+                answerType: TEXT
+                answerStatus: homework // should not return.
