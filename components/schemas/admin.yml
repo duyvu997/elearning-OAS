@@ -1,0 +1,14 @@
+AcceptedMemberBody:
+  type: object
+  properties:
+    username:
+      type: string
+    status:
+      type: string
+      enum: [APPROVAL, DISAPPROVAL]
+    courseId:
+      type: number
+  example:
+    username: duyvu01
+    status: DISAPPROVAL
+    courseId: 10
