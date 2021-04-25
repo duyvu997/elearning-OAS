@@ -29,11 +29,11 @@ QuizSubmitForm:
 
       - answerType: TEXT
         answerContent: T
-        subQuestionId: 1
+        subQuestionId: 2
 
       - answerType: NONE
         answerContent: true
-        subQuestionId: 2
+        subQuestionId: 3
 
 QuizSubmitFormResponse:
   type: object
