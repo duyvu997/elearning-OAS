@@ -4,7 +4,38 @@ Quiz:
     name:
       type: string
 
+Answer:
+  type: object
+  properties:
+    answerType:
+      type: string
+    answerContent:
+      type: string
+    subQuestionId:
+      type: number
+
 QuizSubmitForm:
+  type: object
+  properties:
+    userAnswers:
+      type: array
+      items:
+        - $ref: "#/Answer"
+  example:
+    userAnswers:
+      - answerType: TEXT
+        answerContent: textbook
+        subQuestionId: 1 
+
+      - answerType: TEXT
+        answerContent: T
+        subQuestionId: 1
+
+      - answerType: NONE
+        answerContent: true
+        subQuestionId: 2
+
+QuizSubmitFormResponse:
   type: object
   properties:
     averageScore:
