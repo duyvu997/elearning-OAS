@@ -146,3 +146,11 @@ ChildrenStatistics:
   type: array
   items:
     $ref: '#/ChildStatistics'
+
+UserChangePassword:
+  type: object
+  properties:
+    oldPassword:
+      type: string
+    newPassword:
+      type: string

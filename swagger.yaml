@@ -272,6 +272,23 @@ paths:
         default:
           description: "Successful operation"
       deprecated: true
+  /users/change-password:
+    put:
+      tags:
+        - "User"
+      summary: User change password
+      description: This is api to allow user change password
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserChangePassword"
+      responses:
+        default:
+          description: "Successful operation"
   /courses:
     get:
       tags:
@@ -449,6 +466,8 @@ components:
       $ref: "./components/schemas/user.yml#/ChildStatistics"
     ChildrenStatistics:
       $ref: "./components/schemas/user.yml#/ChildrenStatistics"
+    UserChangePassword:
+      $ref: "./components/schemas/user.yml#/UserChangePassword"
     ##------------------------
     Course:
       $ref: "./components/schemas/course.yml#/Course"
