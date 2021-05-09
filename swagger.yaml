@@ -34,6 +34,43 @@ paths:
           description: "Bad request"
         404:
           description: "Not found"
+    get:
+      tags: 
+        - "Admin"
+      summary: Get all pending request
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegisterToCourse"
+        400:
+          description: "Bad request"
+        404:
+          description: "Not found"
+  /courses-management/courses:
+    post:
+      tags:
+        - "Admin"
+      summary: Admin create new course.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCourse"
+        required: true
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "Successful operation"
+        400:
+          description: "Bad request"
+        404:
+          description: "Not found"
   /verify-code:
     post:
       tags:
@@ -88,7 +125,6 @@ paths:
           description: "Bad request"
         404:
           description: "Not found"
-
   /users/{username}/children:
     get:
       tags:
@@ -495,7 +531,11 @@ components:
       $ref: "./components/schemas/quiz.yml#/QuizDetail"
     ##------------------------
     AcceptedMemberBody:
-      $ref: "./components/schemas/admin.yml#/AcceptedMemberBody"
+      $ref: "./components/schemas/admin.yml#/AcceptedMemberBody" 
+    CreateCourse:
+      $ref: "./components/schemas/admin.yml#/CreateCourse"
+    RegisterToCourse:
+      $ref: "./components/schemas/admin.yml#/RegisterToCourse"
     ##------------------------
     VerifyCodeBody:
       $ref: "./components/schemas/auth.yml#/VerifyCodeBody"
