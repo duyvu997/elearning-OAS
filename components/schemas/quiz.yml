@@ -3,6 +3,9 @@ Quiz:
   properties:
     name:
       type: string
+    status:
+      type: string
+      enum: [DONE, NOT_DONE]
 
 Answer:
   type: object
@@ -25,7 +28,7 @@ QuizSubmitForm:
     userAnswers:
       - answerType: TEXT
         answerContent: textbook
-        subQuestionId: 1 
+        subQuestionId: 1
 
       - answerType: TEXT
         answerContent: T

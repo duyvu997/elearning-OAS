@@ -9,9 +9,11 @@ Lesson:
       type: string
     lessonDesc:
       type: string
+    currentProcess:
+      type: number
     status:
       type: string
-      enum: [DONE, LEARNING, LOCKED]
+      enum: [DONE, LEARNING, LOCKED, OPEN]
 
 LessonDetails:
   type: object
@@ -22,6 +24,8 @@ LessonDetails:
       type: string
     lessonDesc:
       type: string
+    currentProcess:
+      type: number
     resources:
       type: array
       items:
@@ -34,6 +38,7 @@ LessonDetails:
     id: 1
     name: "UNIT 1: MY NEW SCHOOL"
     lessonDesc: A special day
+    currentProcess: 80
     resources:
       - resourceType: VOCABULARY
         contents:
@@ -67,8 +72,10 @@ LessonDetails:
     quizzes:
       - id: 1
         name: exercise 21
+        status: DONE
       - id: 2
         name: exercise 22
+        status: NOT_DONE
 
 LessonResource:
   type: object
