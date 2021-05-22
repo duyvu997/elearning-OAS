@@ -154,3 +154,24 @@ UserChangePassword:
       type: string
     newPassword:
       type: string
+
+ParentStatistics:
+  type: object
+  properties:
+    courseStatus:
+      type: object
+      properties:
+        processing: 
+          type: number
+        done:
+          type: number
+        registed:
+          type: number
+    audit:
+      type: array
+      items:
+        $ref: "./chart.yml#/WeeklyHourAudit"
+    childrenStatistics:
+      type: array
+      items: 
+        $ref: '#/ChildStatistics'

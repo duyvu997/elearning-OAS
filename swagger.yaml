@@ -7,13 +7,35 @@ info:
 servers:
   - url: https://orangejuicev2.herokuapp.com
 tags:
-  - name: "User"
-  - name: "Course"
-  - name: "Quiz"
-  - name: "Auth"
-  - name: "Lesson"
-  - name: "Admin"
+  - name: User
+  - name: Course
+  - name: Quiz
+  - name: Auth
+  - name: Lesson
+  - name: Admin
+  - name: Parent
 paths:
+  #-----------PARENT------------------------------------------------------------------------------------------------------------------------------
+  /parent/children-statistic:
+    get:
+      tags:
+        - Parent
+      summary: Get all children statistics
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ParentStatistics"
+        400:
+          description: "Bad request"
+        404:
+          description: "Not found"
+
+  #-----------ADMIN-------------------------------------------------------------------------------------------------------------------------------
   /courses-management/accepted-members:
     post:
       tags:
@@ -35,7 +57,7 @@ paths:
         404:
           description: "Not found"
     get:
-      tags: 
+      tags:
         - "Admin"
       summary: Get all pending request
       security:
@@ -125,6 +147,8 @@ paths:
           description: "Bad request"
         404:
           description: "Not found"
+
+  #-----------USER--------------------------------------------------------------------------------------------------------------------------------
   /users/{username}/children:
     get:
       tags:
@@ -325,6 +349,8 @@ paths:
       responses:
         default:
           description: "Successful operation"
+
+  #-----------COURSE------------------------------------------------------------------------------------------------------------------------------
   /courses:
     get:
       tags:
@@ -417,6 +443,8 @@ paths:
           description: "Bad request"
         404:
           description: "Courses not found"
+
+  #-----------LESSON------------------------------------------------------------------------------------------------------------------------------
   /lessons/{lessonId}:
     get:
       tags:
@@ -440,6 +468,8 @@ paths:
           description: "Bad request"
         404:
           description: "Courses not found"
+
+  #-----------QUIZ--------------------------------------------------------------------------------------------------------------------------------
   /quizzes/{quizId}/submit:
     post:
       summary: Submit quiz result to server
@@ -531,11 +561,16 @@ components:
       $ref: "./components/schemas/quiz.yml#/QuizDetail"
     ##------------------------
     AcceptedMemberBody:
-      $ref: "./components/schemas/admin.yml#/AcceptedMemberBody" 
+      $ref: "./components/schemas/admin.yml#/AcceptedMemberBody"
     CreateCourse:
       $ref: "./components/schemas/admin.yml#/CreateCourse"
     RegisterToCourse:
       $ref: "./components/schemas/admin.yml#/RegisterToCourse"
+    ##------------------------
+    WeeklyHourAudit:
+      $ref: "./components/schemas/chart.yml#/WeeklyHourAudit"
+    ParentStatistics:
+      $ref: "./components/schemas/user.yml#/ParentStatistics"
     ##------------------------
     VerifyCodeBody:
       $ref: "./components/schemas/auth.yml#/VerifyCodeBody"
