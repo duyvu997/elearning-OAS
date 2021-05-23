@@ -16,7 +16,7 @@ tags:
   - name: Parent
 paths:
   #-----------PARENT------------------------------------------------------------------------------------------------------------------------------
-  /parent/children-statistic:
+  /parent/children-statistics:
     get:
       tags:
         - Parent
@@ -34,7 +34,82 @@ paths:
           description: "Bad request"
         404:
           description: "Not found"
-
+  /parent/teachers:
+    get:
+      tags:
+        - Parent
+      summary: Get all teacher contact information
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TeacherContactInfo"
+        400:
+          description: "Bad request"
+        404:
+          description: "Not found"
+  /parent/courses:
+    get:
+      tags:
+        - Parent
+      summary: Get all courses (which course children not registed)
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/offset"
+        - in: query
+          name: popular
+          schema:
+            type: boolean
+          required: false
+          description: "Get courses with tag popular."
+        - in: query
+          name: newest
+          schema:
+            type: boolean
+          required: false
+          description: "Get courses with tag newest"
+        - in: query
+          name: all
+          schema:
+            type: boolean
+          required: false
+          description: "Get courses with tag all"
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CoursesResponse"
+        400:
+          description: "Bad request"
+        404:
+          description: "Not found"
+  /parent/children-courses:
+    get:
+      tags:
+        - Parent
+      summary: Get all children courses
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ParentChildrenCourse"
+        400:
+          description: "Bad request"
+        404:
+          description: "Not found"
+  
   #-----------ADMIN-------------------------------------------------------------------------------------------------------------------------------
   /courses-management/accepted-members:
     post:
@@ -149,24 +224,6 @@ paths:
           description: "Not found"
 
   #-----------USER--------------------------------------------------------------------------------------------------------------------------------
-  /users/{username}/children:
-    get:
-      tags:
-        - "User"
-      parameters:
-        - in: path
-          name: username
-          schema:
-            type: string
-          required: true
-      summary: Get children of this user.
-      responses:
-        400:
-          description: "Invalid username supplied"
-        404:
-          description: "User not found"
-      security:
-        - bearerAuth: []
   /users/children:
     get:
       tags:
@@ -212,7 +269,7 @@ paths:
   /users:
     get:
       tags:
-        - "User"
+        - User
       summary: "Get user's information"
       responses:
         200:
@@ -322,16 +379,6 @@ paths:
                 Please decode for more information: using https://jwt.io/'
         400:
           description: "Invalid username/password supplied"
-  /users/logout:
-    post:
-      tags:
-        - "User"
-      summary: "Logs out current logged in user session"
-      description: ""
-      responses:
-        default:
-          description: "Successful operation"
-      deprecated: true
   /users/change-password:
     put:
       tags:
@@ -349,6 +396,35 @@ paths:
       responses:
         default:
           description: "Successful operation"
+  /users/logout:
+    post:
+      tags:
+        - "User"
+      summary: "Logs out current logged in user session"
+      description: ""
+      responses:
+        default:
+          description: "Successful operation"
+      deprecated: true
+  /users/{username}/children:
+    get:
+      tags:
+        - "User"
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+      summary: Get children of this user.
+      responses:
+        400:
+          description: "Invalid username supplied"
+        404:
+          description: "User not found"
+      security:
+        - bearerAuth: []
+      deprecated: true
 
   #-----------COURSE------------------------------------------------------------------------------------------------------------------------------
   /courses:
@@ -571,6 +647,10 @@ components:
       $ref: "./components/schemas/chart.yml#/WeeklyHourAudit"
     ParentStatistics:
       $ref: "./components/schemas/user.yml#/ParentStatistics"
+    ParentChildrenCourse:
+      $ref: "./components/schemas/user.yml#/ParentChildrenCourse"
+    TeacherContactInfo:
+      $ref: "./components/schemas/user.yml#/TeacherContactInfo"
     ##------------------------
     VerifyCodeBody:
       $ref: "./components/schemas/auth.yml#/VerifyCodeBody"

@@ -119,6 +119,8 @@ QuizDetail:
   properties:
     quizTitle:
       type: string
+    acceptanceScore:
+      type: number
     durations:
       type: number
       description: time in seconds
@@ -141,6 +143,7 @@ QuizDetail:
   example:
     quizTitle: Match the words with the school things
     durations: 3600
+    acceptanceScore: 70
     histories:
       - timestamp: "2020-11-11 13:40:58"
         completedPercent: 100

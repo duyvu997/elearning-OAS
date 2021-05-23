@@ -12,7 +12,7 @@ Course:
       type: "string"
     courseImageUrl:
       type: "string"
-
+  
 GeneralCourse:
   allOf:
     - $ref: "#/Course"
@@ -35,6 +35,13 @@ PersonalCourse:
           type: integer
           maximum: 100
           minimum: 0
+  example:
+    name: Tieng anh 6
+    duration: 1800
+    members: 50
+    authors: Duy Vu
+    courseImageUrl: 'https://123.com'
+    userCourseProcess: 85
 
 CoursesResponse:
   type: array
@@ -43,7 +50,7 @@ CoursesResponse:
     properties:
       tagName:
         type: string
-        enum: [BY-USER, POPULAR, NEWEST, ALL]
+        enum: [POPULAR, BY-USER, NEWEST, ALL]
       result:
         type: array
         items:
