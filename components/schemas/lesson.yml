@@ -24,6 +24,10 @@ LessonDetails:
       type: string
     lessonDesc:
       type: string
+    shortMessage:
+      type: string
+    fileId:
+      type: string
     currentProcess:
       type: number
     resources:
@@ -41,34 +45,69 @@ LessonDetails:
     currentProcess: 80
     resources:
       - resourceType: VOCABULARY
-        contents:
-          - vocabulary: physics
-            vocabType: (noun)
-            pronounce: "['fiziks]"
-            meaning: vat ly hoc
+        title: Vocabularies
+        subResources:
+          - title: null,
+            extraData:
+              - category: TEXT
+                content: "physics (n) ['fiziks]: vật lý học"
+                sample:
+                  [
+                    She studied chemistry and physics at college.,
+                    She's got a physics degree from Warwick University.,
+                  ]
+              - category: TEXT
+                content: "exercise (n) ['eksəsaiz]: sự vận dụng"
+                sample:
+                  [
+                    Regular exercise reduces the risk of coronary heart disease.,
+                    Eat healthily and take plenty of exercise.,
+                  ]
+
       - resourceType: GRAMMAR
-        contents:
-          - title: The present simple
-            subContent:
-              [
-                Positive,
-                I/ you/ we/ they + V (work/ study),
-                He/ she/ it + V-s/ V-es (works/ studies),
-              ]
+        title: null
+        subResources:
+          - title: The present simple,
+            extraData: []
+          - title: Positive
+            extraData:
+              - category: TEXT
+                content: "I/ you/ we/ they + V (work/ study)"
+                sample: []
+              - category: TEXT
+                content: "He/ she/ it + V-s/ V-es (works/ studies)"
+                sample: []
+          - title: Negative
+            extraData:
+              - category: TEXT
+                content: "I/ you/ we/ they + don’t/ do not + V (don’t/ do not work/ study)"
+                sample: []
+              - category: TEXT
+                content: "He/ she/ it + doesn’t/ does not + V (doesn’t/ does not work/ study)"
+                sample: []
       - resourceType: REMEMBER
-        contents:
-          [
-            "The present simple verbs with he/ she/ it need an s/es",
-            "When something often happens or is fixed: the present simple",
-            "When something is happening now: the present continuous",
-          ]
+        subResources:
+          - title: null,
+            extraData:
+              - category: TEXT
+                content: "The present simple verbs with he/ she/ it need an s/es"
+                sample: []
+              - category: TEXT
+                content: "When something often happens or is fixed: the present simple"
+                sample: []
+              - category: TEXT
+                content: "When something is happening now: the present continuous"
+                sample: []
       - resourceType: VIDEO
-        contents:
-          [
-            "https://www.youtube.com/watch?v=REKHhDWN-s",
-            "https://www.youtube.com/watch?v=REKHhDWN-s",
-            "https://www.youtube.com/watch?v=REKHhDWN-s",
-          ]
+        subResources:
+          - title: null,
+            extraData:
+              - category: VIDEO
+                content: "physics (n) ['fiziks]: vật lý học"
+                sample: []
+              - category: VIDEO
+                content: "exercise (n) ['eksəsaiz]: sự vận dụng"
+                sample: []
     quizzes:
       - id: 1
         name: exercise 21
@@ -82,39 +121,30 @@ LessonResource:
   properties:
     resourceType:
       type: string
-      enum: ["VOCABULARY", REMEMBER, GRAMMAR, VIDEO]
+      enum: [VOCABULARY, REMEMBER, GRAMMAR, VIDEO]
     references:
       type: string
-    contents:
+    title:
+      type: string
+    subResources:
       type: array
       items:
-        oneOf:
-          - $ref: "#/VocabularyContent"
-          - $ref: "#/GrammarContent"
-          - $ref: "#/RememberContent"
+        - ref: "#/SubResource"
 
-VocabularyContent:
-  type: object
-  properties:
-    vocabulary:
-      type: string
-    vocabType:
-      type: string
-    pronounce:
-      type: string
-    meaning:
-      type: string
-
-GrammarContent:
+SubResource:
   type: object
   properties:
     title:
       type: string
-    subContent:
+    extraData:
       type: array
       items:
-        type: string
-
-RememberContent:
-  type: string
-  example: When something is happening now the present continuous
+        type: object
+        properties:
+          category:
+            type: string
+          content:
+            type: string
+          sample:
+            type: array
+            items: string
