@@ -109,7 +109,7 @@ paths:
           description: "Bad request"
         404:
           description: "Not found"
-  
+
   #-----------ADMIN-------------------------------------------------------------------------------------------------------------------------------
   /courses-management/accepted-members:
     post:
@@ -567,6 +567,10 @@ paths:
       responses:
         204:
           description: "Successful operation - No content"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuizSubmitFormResponse"
         400:
           description: "Bad request"
         404:
@@ -633,6 +637,8 @@ components:
       $ref: "./components/schemas/quiz.yml#/Quiz"
     QuizSubmitForm:
       $ref: "./components/schemas/quiz.yml#/QuizSubmitForm"
+    QuizSubmitFormResponse:
+      $ref: "./components/schemas/quiz.yml#/QuizSubmitFormResponse"
     QuizDetail:
       $ref: "./components/schemas/quiz.yml#/QuizDetail"
     ##------------------------

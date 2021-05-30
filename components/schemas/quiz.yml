@@ -55,13 +55,43 @@ QuizSubmitFormResponse:
             type: number
   example:
     averageScore: 95
+    finishMessage: 'Chúc mừng'
     ingredientsScore:
       - ingredientType: MATCHING
+        ingredientName: Match the words with the school things
         ingredientScore: 95
       - ingredientType: TRUE_OR_FALSE
+        ingredientName: True or false
         ingredientScore: 95
       - ingredientType: COMPLETE_SENTENCE
+        ingredientName: Complete the sentences
         ingredientScore: 95
+      - ingredientType: CHOOSE_ANSWER
+        ingredientName: Choose correct answers
+        ingredientScore: 95
+    details: 
+      - answerType: "TEXT"
+        answerContent: "rubber"
+        subQuestionId: 1
+        status: true
+        correctAnswer: "rubber" 
+      - answerType: "TEXT"
+        answerContent: "T"
+        subQuestionId: 7
+        status: false
+        correctAnswer: "F" 
+      - answerType: "NONE"
+        answerContent: "null"
+        subQuestionId: 12
+        status: true
+        correctAnswer: "null" 
+      - answerType: "TEXT"
+        answerContent: "judo"
+        subQuestionId: 20
+        status: false
+        correctAnswer: "science"
+      
+
 
 SubQuestion:
   type: object
