@@ -90,3 +90,65 @@ RegisterToCourse:
       courseId: 3
     - username: user 5
       courseId: 2
+
+AdminCourse:
+  type: object
+  properties:
+    name:
+      type: "string"
+    duration:
+      type: "string"
+    members:
+      type: "integer"
+      format: "int32"
+    authors:
+      type: "string"
+    courseImageUrl:
+      type: "string"
+    teachers:
+      type: "number"
+
+AdminCourses:
+  type: array
+  items:
+    type: object
+    properties:
+      name:
+        type: "string"
+      duration:
+        type: "string"
+      members:
+        type: "integer"
+        format: "int32"
+      authors:
+        type: "string"
+      courseImageUrl:
+        type: "string"
+      teachers:
+        type: "number"
+      courses:
+        type: "number"
+      quizzes:
+        type: "number"
+      status:
+        type: "string"
+        enum: [ENABLE, DISABLE]
+  example:
+    - name: Tieng anh 6
+      duration: 1800
+      members: 50
+      authors: Duy Vu
+      courseImageUrl: "https://123.com"
+      teachers: 85
+      courses: 85
+      quizzes: 85
+      status: ENABLE
+    - name: Tieng anh 7
+      duration: 1800
+      members: 50
+      authors: Duy Vu
+      courseImageUrl: "https://123.com"
+      teachers: 85
+      courses: 85
+      quizzes: 85
+      status: DISABLE
