@@ -152,3 +152,96 @@ AdminCourses:
       courses: 85
       quizzes: 85
       status: DISABLE
+
+AdminCourseDetail: 
+  type: object
+  properties:
+    courseImageUrl:
+      type: "string"
+    name:
+      type: "string"
+    duration:
+      type: number
+      description: duration in minutes 
+    shortMessage:
+      type: string
+    description:
+      type: string
+    authors:
+      type: "string"
+    teachers:
+      type: "number"
+    status: 
+      type: string 
+      enum: [ACTIVE, INACTIVE]
+    startDate:
+      type: string
+    endDate:
+      type: string
+    minAge:
+      type: number
+    lessons: 
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: number
+          name:
+            type: string
+          title:
+            type: string
+          lessonImageUrl:
+            type: string
+          numberOfQuizzes: 
+            type: number
+          status: 
+            type: string  
+            enum: [ACTIVE, INACTIVE]
+
+AdminCourseChildren:
+  type: array
+  items:
+    type: object
+    properties:
+      id: 
+        type: string
+      avatarUrl:
+        type: string
+      name:
+        type: string
+      username:
+        type: string
+      userCourseProcess:
+        type: string
+      status:
+        type: string
+        enum: [APPROVAL, PENDING]
+  example:
+    - id: string,
+      avatarUrl: string,
+      name: string,
+      username: string,
+      userCourseProcess: string,
+      status: APPROVAL
+    - id: string,
+      avatarUrl: string,
+      name: string,
+      username: string,
+      userCourseProcess: string,
+      status: PENDING
+
+AdminCourseTeachers:
+  type: array
+  items:
+    type: object
+    properties: 
+      id: 
+        type: string
+      avatarUrl:
+        type: string
+      name:
+        type: string
+      username:
+        type: string
+

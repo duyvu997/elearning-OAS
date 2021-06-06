@@ -185,7 +185,82 @@ paths:
           description: "Bad request"
         404:
           description: "Not found"
-    
+
+  /courses-management/courses/{courseId}:
+    get:
+      tags:
+        - "Admin"
+      summary: Admin get all courses.
+      parameters:
+        - in: path
+          name: courseId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the course to get
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminCourseDetail"
+        400:
+          description: "Bad request"
+        404:
+          description: "Not found"
+  /courses-management/courses/{courseId}/children: 
+    get:
+      tags:
+        - "Admin"
+      summary: Admin get all children of course by id.
+      parameters:
+        - in: path
+          name: courseId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the course to get
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminCourseChildren"
+        400:
+          description: "Bad request"
+        404:
+          description: "Not found"
+  /courses-management/courses/{courseId}/teachers: 
+    get:
+      tags:
+        - "Admin"
+      summary: Admin get all teachers of course by id.
+      parameters:
+        - in: path
+          name: courseId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the course to get
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminCourseTeachers"
+        400:
+          description: "Bad request"
+        404:
+          description: "Not found"
   /verify-code:
     post:
       tags:
@@ -668,6 +743,12 @@ components:
       $ref: "./components/schemas/admin.yml#/RegisterToCourse"
     AdminCourses:
       $ref: "./components/schemas/admin.yml#/AdminCourses"
+    AdminCourseDetail:
+      $ref: "./components/schemas/admin.yml#/AdminCourseDetail"
+    AdminCourseChildren:
+      $ref: "./components/schemas/admin.yml#/AdminCourseChildren"
+    AdminCourseTeachers:
+      $ref: "./components/schemas/admin.yml#/AdminCourseTeachers"
     ##------------------------
     WeeklyHourAudit:
       $ref: "./components/schemas/chart.yml#/WeeklyHourAudit"
