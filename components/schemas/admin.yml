@@ -244,4 +244,45 @@ AdminCourseTeachers:
         type: string
       username:
         type: string
+      status: 
+        type: string  
+        enum: []
+
+
+CreateLesson: 
+  type: object
+  properties:
+    name:
+      type: string
+    status:
+      type: string
+    lessonDesc:
+      type: string
+    shortMessage:
+      type: string
+    fileId:
+      type: string
+    resources:
+      type: array
+      items:
+        type: object
+        properties:
+          resourceType:
+            type: string
+          title:
+            type: string
+          subResources:
+            type: array
+            items:
+              type: object
+              properties:
+                title:
+                  type: string
+                extraData:
+                  extraDataType:
+                    type: string
+                  content:
+                    type: string
+                  example:
+                    type: string
 

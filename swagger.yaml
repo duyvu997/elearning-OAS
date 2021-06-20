@@ -211,6 +211,31 @@ paths:
           description: "Bad request"
         404:
           description: "Not found"
+  /courses-management/courses/{courseId}/lessons:
+    post:
+      tags:
+        - "Admin"
+      summary: Admin create lessons.
+      parameters:
+        - in: path
+          name: courseId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the course to get
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateLesson"
+        400:
+          description: "Bad request"
+        404:
+          description: "Not found"
   /courses-management/courses/{courseId}/children: 
     get:
       tags:
@@ -745,6 +770,8 @@ components:
       $ref: "./components/schemas/admin.yml#/AdminCourses"
     AdminCourseDetail:
       $ref: "./components/schemas/admin.yml#/AdminCourseDetail"
+    CreateLesson:
+      $ref: "./components/schemas/admin.yml#/CreateLesson"
     AdminCourseChildren:
       $ref: "./components/schemas/admin.yml#/AdminCourseChildren"
     AdminCourseTeachers:
